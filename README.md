@@ -10,9 +10,11 @@
 Stop wasting time exporting `.jsx` or `.fbx` files manually. This add-on acts as a direct bridge, perfectly translating your Blender camera tracking, animation, and focal length into an After Effects composition in milliseconds.
 
 <p align="center">
-  <video src="Readme video.mp4" controls="controls" style="max-width: 100%;"></video>
+  <a href="https://youtu.be/6oNJN0jOT1s">
+    <img src="https://img.youtube.com/vi/6oNJN0jOT1s/maxresdefault.jpg" alt="Blender to AE Instant Camera Transfer Demo" style="max-width: 100%;">
+  </a>
   <br/>
-  <i>(If the video above doesn't load, <a href="https://github.com/musahabibulloh/blender-ae-instant-transfer/raw/main/Readme%20video.mp4">click here to view it</a>)</i>
+  <i>Click the image above to watch the full demo on YouTube!</i>
 </p>
 
 ## 📑 Table of Contents
