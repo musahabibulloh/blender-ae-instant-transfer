@@ -1,6 +1,13 @@
-# Blender-to-AE Instant Camera Transfer
+# 🚀 Blender to After Effects (AE) Instant Camera Transfer
 
-**A highly efficient, single-click bridge between Blender 3D and Adobe After Effects for seamless camera animation transfer.**
+![Blender Version](https://img.shields.io/badge/Blender-3.0%2B-orange?style=flat-square&logo=blender)
+![After Effects Version](https://img.shields.io/badge/After_Effects-CC_2018%2B-blue?style=flat-square&logo=adobeaftereffects)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey?style=flat-square&logo=windows)
+
+**The fastest, 1-click solution to export and transfer your 3D Camera from Blender directly to Adobe After Effects.** 
+
+Stop wasting time exporting `.jsx` or `.fbx` files manually. This add-on acts as a direct bridge, perfectly translating your Blender camera tracking, animation, and focal length into an After Effects composition in milliseconds.
 
 <p align="center">
   <video src="Readme video.mp4" controls="controls" style="max-width: 100%;"></video>
@@ -8,34 +15,55 @@
   <i>(If the video above doesn't load, <a href="https://github.com/musahabibulloh/blender-ae-instant-transfer/raw/main/Readme%20video.mp4">click here to view it</a>)</i>
 </p>
 
-## 📖 Overview
+## 📑 Table of Contents
+- [Why Use This Add-on?](#-why-use-this-add-on)
+- [How It Works (Under the Hood)](#-how-it-works-technical-details)
+- [Key Features](#-key-features)
+- [Installation Guide](#-installation-guide)
+- [How to Use](#-how-to-use)
+- [Troubleshooting](#-troubleshooting)
+- [Author & License](#-author--license)
 
-When working on motion graphics and 3D animation, seamlessly integrating 3D camera data from Blender into a 2.5D compositing environment like Adobe After Effects has always been tedious. Traditional workflows require exporting `.jsx` or `.fbx` files, manually importing them into AE, and linking scripts. 
+---
 
-**Blender-to-AE Instant Transfer** eliminates this friction. It acts as an automated pipeline that directly extracts the exact animation data from your selected Blender camera, translates the 3D coordinate space, and instantly injects a native Camera Layer into your active After Effects composition via a background command execution.
+## ⚡ Why Use This Add-on?
 
-## 🛠️ How It Works (Under the Hood)
+Traditionally, sending a camera from Blender to After Effects involves a tedious workflow:
+1. Selecting the camera.
+2. Going to `File > Export > After Effects (.jsx)`.
+3. Finding a place to save the file.
+4. Opening After Effects.
+5. Going to `File > Scripts > Run Script File...`
+6. Finding and importing the `.jsx` file.
+
+**With this add-on:**
+1. Select the camera.
+2. Click **Transfer Camera to AE**.
+
+*(Done. After Effects opens automatically and places the animated camera directly in your timeline).*
+
+---
+
+## 🛠️ How It Works (Technical Details)
 
 This add-on handles complex coordinate math and system communication automatically:
 
-1. **Mathematical Coordinate Translation**: Blender uses a right-handed system (Z-Up, Y-Forward), whereas After Effects uses a modified left-handed pixel-based system (Y-Down, Z-Forward). The script performs matrix decomposition on the camera's `matrix_world` for every single frame and calculates the exact Euler rotation offsets and positional inversion required to match AE's 3D space.
-2. **Focal Length to Zoom Conversion**: After Effects cameras operate on a "Zoom" parameter (in pixels) rather than traditional Focal Length/Field of View. The script calculates the exact zoom value dynamically based on your render resolution and the camera's FOV.
-3. **Automated Inter-Process Communication (IPC)**: The add-on safely queries the Windows Registry (`HKEY_LOCAL_MACHINE`) to dynamically locate your specific Adobe After Effects installation path (`AfterFX.exe`). It then generates a temporary ExtendScript (`.jsx`) payload and pushes it to the After Effects process, ensuring your data is transferred whether AE is currently closed, or already running in the background.
+- **Coordinate Matrix Translation**: Translates Blender's Right-Handed system (Z-Up, Y-Forward) into After Effects' Left-Handed pixel space (Y-Down, Z-Forward) by decomposing the camera's `matrix_world` on every frame.
+- **Focal Length & Sensor Conversion**: Automatically calculates the exact After Effects **Zoom (in pixels)** dynamically based on your render resolution and Blender's FOV/Focal Length.
+- **Background Execution (IPC)**: The add-on safely queries the Windows Registry (`HKEY_LOCAL_MACHINE`) to dynamically locate `AfterFX.exe`. It generates an ExtendScript (`.jsx`) payload and pushes it to the After Effects process headless.
 
-## ✨ Core Features
+---
 
-* **True 1-Click Execution**: No exporting, no importing, no browsing for files. One click in Blender, and the camera appears in After Effects.
-* **Selection-Aware**: It specifically targets your *Active Object* (if it's a camera). You can have 10 different cameras in a scene and easily transfer only the one you need.
-* **Smart Composition Handling**: If an After Effects project/composition is open, the camera will be injected seamlessly into your active composition. If none is open, it generates a new comp matching your Blender render resolution and framerate.
-* **Dynamic Frame Mapping**: Accurately maps the `frame_start` and `frame_end` of your scene, ensuring the animation timing remains 1:1.
+## ✨ Key Features
 
-## 📋 Requirements
+- 🎯 **Selection-Aware**: It only exports your *Active Selected Camera*. Perfect for complex scenes with multiple cameras.
+- ⏱️ **True 1-Click Execution**: No exporting menus, no importing dialogs. 
+- 🎬 **Smart Comp Creation**: Automatically injects into your active composition, or creates a new one perfectly matching your Blender render resolution and framerate.
+- 🔄 **Dynamic Frame Mapping**: Retains your exact `frame_start` and `frame_end` timing perfectly.
 
-* **Blender**: 3.0 or higher.
-* **Adobe After Effects**: CC 2018 or newer.
-* **Operating System**: Windows (The automated executable location feature relies on the Windows Registry).
+---
 
-## 🚀 Installation
+## 📥 Installation Guide
 
 1. Download the `blender_to_ae.py` file from this repository.
 2. Open Blender.
@@ -43,21 +71,38 @@ This add-on handles complex coordinate math and system communication automatical
 4. Click **Install...** and select the downloaded `blender_to_ae.py` file.
 5. Check the box next to **Import-Export: Instant AE Camera Transfer** to enable it.
 
-## 🕹️ Usage
+> **Requirements:** Blender 3.0+, Adobe After Effects CC 2018+, and Windows OS.
 
-1. Open your scene in Blender.
-2. Click on the **Camera** you wish to transfer in the 3D Viewport (ensure it is the active selection).
-3. Press the **`N`** key to open the Sidebar menu.
-4. Open the **AE Transfer** tab.
-5. *(Optional)* Adjust the **Scale** (default `100` means 1 Blender unit translates to 100 pixels in AE).
-6. Click the **Transfer Camera to AE** button.
+---
 
-After Effects will immediately process the data and present your animated camera layer.
+## 🎮 How to Use
 
-## 📝 License
+1. Open your 3D scene in Blender.
+2. Click on the **Camera** you wish to transfer in the 3D Viewport.
+3. Press **`N`** on your keyboard to open the Sidebar menu.
+4. Click on the **AE Transfer** tab.
+5. *(Optional)* Adjust the **Scale** (default `100` means 1 Blender unit = 100 pixels in AE).
+6. Click **Transfer Camera to AE**.
 
-Distributed under the MIT License. See `LICENSE` for more information.
+---
 
-## 👤 Author
+## 🐛 Troubleshooting
 
-**Musa Habibulloh Al Faruq**
+* **Button is greyed out?** Make sure you actually clicked on a Camera object in the 3D viewport.
+* **Error: Could not find After Effects?** Ensure After Effects is installed properly on Windows. The script looks for it in standard Adobe directories and the Registry.
+
+---
+
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/musahabibulloh/blender-ae-instant-transfer/issues) if you have any ideas to improve this workflow.
+
+## 👤 Author & License
+
+**Musa Habibulloh Al Faruq**  
+Distributed under the **MIT License**.
+
+<br>
+
+<div align="center">
+  <sub><i>Keywords for searchability: export blender camera to after effects, blender to ae script, b3d to ae, blender camera tracking export, after effects live link, blender to after effects bridge, jsx export alternative, automatic camera transfer.</i></sub>
+</div>
